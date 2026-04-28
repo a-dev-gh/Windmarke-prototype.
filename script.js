@@ -37,12 +37,31 @@
   /* ---------- Hero entrance ---------- */
   const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
   heroTl
-    .from('.hero__head > *', {
-      y: 28,
+    .from('.hero__head .eyebrow', {
+      y: 24,
       opacity: 0,
-      duration: 0.9,
-      stagger: 0.12,
+      duration: 0.7,
     })
+    .fromTo(
+      '.hero__title--reveal',
+      { clipPath: 'inset(0 100% 0 0)', WebkitClipPath: 'inset(0 100% 0 0)' },
+      {
+        clipPath: 'inset(0 0% 0 0)',
+        WebkitClipPath: 'inset(0 0% 0 0)',
+        duration: 1.4,
+        ease: 'power3.inOut',
+      },
+      '-=0.3'
+    )
+    .from(
+      '.hero__sub',
+      {
+        y: 20,
+        opacity: 0,
+        duration: 0.7,
+      },
+      '-=0.6'
+    )
     .from(
       '.panel',
       {
@@ -52,7 +71,7 @@
         stagger: 0.14,
         clearProps: 'transform,opacity',
       },
-      '-=0.4'
+      '-=0.6'
     );
 
   gsap.from('.trust', {

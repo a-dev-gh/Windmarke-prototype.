@@ -71,6 +71,11 @@ fieldset { border: 0; }
 }
 
 .ink-blue { color: var(--blue); }
+.ink-purple { color: #7C3AED; }
+
+/* Hide numeric labels per design request */
+.panel__num,
+.feature__meta { display: none; }
 
 /* === Announcement bar === */
 .ann {
