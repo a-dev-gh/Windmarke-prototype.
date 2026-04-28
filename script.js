@@ -223,35 +223,40 @@
   const stepperLineFill = document.querySelector('.stepper__line-fill');
   const steps = gsap.utils.toArray('.step');
 
-  if (steps.length) {
-    const stepperTl = gsap.timeline({
-      scrollTrigger: { trigger: '.stepper', start: 'top 75%', once: true },
-      defaults: { ease: 'power3.out' },
-    });
+  if (steps.length && stepperLineFill) {
+    gsap.set('.step__body', { opacity: 0, y: 12 });
 
-    stepperTl
-      .from(steps, {
-        y: 36,
-        opacity: 0,
-        duration: 0.7,
-        stagger: 0.14,
-      })
-      .to(
-        stepperLineFill,
-        {
+    ScrollTrigger.create({
+      trigger: '.stepper',
+      start: 'top 75%',
+      once: true,
+      onEnter: () => {
+        gsap.to(stepperLineFill, {
           width: '100%',
-          duration: 1.5,
+          duration: 1.8,
           ease: 'power2.inOut',
-          onStart: () => {
+          onUpdate: function () {
+            const progress = this.progress();
+            const total = steps.length;
             steps.forEach((s, i) => {
-              gsap.delayedCall(i * 0.34, () =>
-                s.classList.add('is-active')
-              );
+              const threshold = i / (total - 1);
+              if (progress >= threshold && !s.classList.contains('is-active')) {
+                s.classList.add('is-active');
+                const body = s.querySelector('.step__body');
+                if (body) {
+                  gsap.to(body, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.5,
+                    ease: 'power3.out',
+                  });
+                }
+              }
             });
           },
-        },
-        '-=0.3'
-      );
+        });
+      },
+    });
   }
 
   /* ---------- Audience cards entrance ---------- */

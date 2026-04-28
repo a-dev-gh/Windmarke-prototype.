@@ -929,8 +929,8 @@ fieldset { border: 0; }
 .stepper__line {
   position: absolute;
   top: 32px;
-  left: 12.5%;
-  right: 12.5%;
+  left: 32px;
+  right: calc(25% - 56px);
   height: 2px;
   background: var(--border-2);
   border-radius: 2px;
